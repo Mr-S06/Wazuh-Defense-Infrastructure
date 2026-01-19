@@ -80,11 +80,11 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 
 | Component | Platform | Role |
 |-----------|----------|------|
-| **Wazuh Manager** | Lubuntu VM | Central analysis engine, rule processing, alert generation |
-| **Wazuh Indexer** | Lubuntu VM | OpenSearch-based data storage and indexing |
+| **Wazuh Manager** | ubuntu VM | Central analysis engine, rule processing, alert generation |
+| **Wazuh Indexer** | ubuntu VM | OpenSearch-based data storage and indexing |
 | **Wazuh Dashboard** | Windows 11 | Web-based visualization and management interface |
-| **Windows 10 Agent** | Windows 10 | Monitored endpoint with agent deployment |
-| **Linux Agent** | Linux Mint | Secondary monitored endpoint |
+| **Windows Agent** | Windows 10 | Monitored endpoint with agent deployment |
+| **Linux Agent** | Ubuntu | Monitored endpoint with agent deployment |
 | **Attacker Machine** | Kali Linux | Red team simulation and penetration testing |
 | **pfSense Firewall** | pfSense | Network perimeter defense and traffic monitoring |
 
@@ -104,7 +104,6 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 - **Alert Management**: Rule-based detection with configurable severity levels
 - **Incident Response**: Workflow for investigating and responding to security events
 - **Threat Simulation**: Controlled attack scenarios using Kali Linux
-- **Honeypot Integration**: Deception technology for attacker tracking
 
 ##  Lab Environment
 
