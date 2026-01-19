@@ -1,5 +1,8 @@
 # Wazuh-Defense-Infrastructure
-This project demonstrates a fully functional Security Information and Event Management (SIEM) infrastructure built from the ground up, featuring centralized log management, real-time threat detection, and security analytics across multiple operating systems and network segments.
+This project documents a fully functional Security Operations Center (SOC) home lab built using VirtualBox, pfSense, and Wazuh SIEM.
+The lab is designed to simulate real-world blue team operations, including log collection, firewall telemetry ingestion, host-based monitoring, and attack detection.
+The primary goal of this lab is to gain practical SOC experience in log analysis, detection engineering, troubleshooting, and SIEM operations.
+
 # 🛡️ Cybersecurity Home Lab – Wazuh Integration
 <img width="1852" height="956" alt="dashboard wazuh - Copy" src="https://github.com/user-attachments/assets/ad4189d6-abe8-4b30-b940-3695e7f0b13c" />
 
