@@ -23,8 +23,10 @@ A comprehensive security monitoring environment built to demonstrate enterprise-
 - [Future Enhancements](#future-enhancements)
 - [Documentation](#documentation)
 - [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
 
-## 🎯 Overview
+
+##  Overview
 
 This project showcases a fully functional Security Operations Center (SOC) environment built in a home lab setting. The infrastructure integrates **Wazuh Manager, Indexer, and Dashboard** with multiple endpoints and network security components to provide real-time threat detection, log analysis, and incident response capabilities.
 
@@ -36,7 +38,7 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 - Simulate real-world attack scenarios for detection validation
 - Build expertise in security monitoring, log analysis, and dashboarding
 
-## 🏗️ Architecture
+##  Architecture
 
 ### Network Topology
 
@@ -83,7 +85,7 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 | **Attacker Machine** | Kali Linux | Red team simulation and penetration testing |
 | **pfSense Firewall** | pfSense | Network perimeter defense and traffic monitoring |
 
-## ✨ Key Features
+##  Key Features
 
 ### Monitoring & Detection
 
@@ -101,7 +103,7 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 - **Threat Simulation**: Controlled attack scenarios using Kali Linux
 - **Honeypot Integration**: Deception technology for attacker tracking
 
-## 🖥️ Lab Environment
+##  Lab Environment
 
 ### Hardware Requirements
 
@@ -118,7 +120,7 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 - **pfSense**: Open-source firewall appliance
 - **Wazuh 4.12**: Latest stable version
 
-## 🚀 Installation & Setup
+##  Installation & Setup
 
 ### Phase 1: Core Wazuh Deployment
 
@@ -191,7 +193,7 @@ Restart-Service -Name wazuh
 3. Enable traffic logging for monitored interfaces
 4. Verify log ingestion in Wazuh Dashboard
 
-## 🎓 Implemented Capabilities
+##  Implemented Capabilities
 
 ### 1. File Integrity Monitoring (FIM)
 
@@ -229,7 +231,7 @@ Implemented deception technology to:
 - Generate high-fidelity alerts
 - Study attack patterns and TTPs
 
-## 🔬 Use Cases & Demonstrations
+##  Use Cases & Demonstrations
 
 ### Test Scenario 1: File Integrity Validation
 
@@ -267,7 +269,7 @@ Implemented deception technology to:
 
 **Visibility**: Complete packet-level insight through pfSense integration
 
-## 📸 Screenshots
+##  Screenshots
 
 ### Wazuh Dashboard Overview
 ![Dashboard](link-to-screenshot)<img width="1852" height="956" alt="dashboard wazuh - Copy" src="https://github.com/user-attachments/assets/f6de356b-84bc-4f7e-8150-9e6914cbbd4f" />
@@ -283,7 +285,7 @@ Implemented deception technology to:
 ### Security Alerts
 ![Alerts](link-to-screenshot)<img width="1915" height="1017" alt="wazuh event dashboard" src="https://github.com/user-attachments/assets/b19285a0-ee42-4553-b25d-c1c23984bb73" />
 
-## 💡 Skills Demonstrated
+##  Skills Demonstrated
 
 ### Technical Competencies
 
@@ -307,7 +309,7 @@ Implemented deception technology to:
 - **Threat Intelligence**: IOC correlation and threat mapping
 - **Documentation**: Technical writing and procedure documentation
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 - [ ] Integration with threat intelligence feeds (MISP, STIX/TAXII)
 - [ ] Active Response automation (automatic blocking, containment)
@@ -318,7 +320,7 @@ Implemented deception technology to:
 - [ ] Email alerting and notification system
 - [ ] Compliance reporting (PCI-DSS, HIPAA, CIS benchmarks)
 
-## 📚 Documentation
+##  Documentation
 
 Detailed documentation for this project is available in the following resources:
 
@@ -332,13 +334,13 @@ Detailed documentation for this project is available in the following resources:
 - [Wazuh Community Forums](https://groups.google.com/g/wazuh)
 - [MITRE ATT&CK Framework](https://attack.mitre.org/)
 
-## 🤝 Acknowledgments
+##  Acknowledgments
 
 - **Wazuh Team** for developing the open-source SIEM platform
 - **Cybersecurity Community** for shared knowledge and best practices
 - **pfSense Project** for the robust firewall solution
 
-## 📧 Contact
+##  Contact
 
 **Sufiyan Sageer**
 
@@ -346,6 +348,6 @@ For questions, suggestions, or collaboration opportunities, feel free to reach o
 
 ---
 
-⭐ If you found this project helpful, please consider giving it a star!
+ If you found this project helpful, please consider giving it a star!
 
 **Disclaimer**: This lab environment is designed for educational and testing purposes only. Do not use these techniques on systems you do not own or have explicit permission to test.
