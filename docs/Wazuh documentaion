@@ -1,0 +1,202 @@
+# Wazuh SOC Lab with pfSense
+**Full Build & Integration Guide**
+
+## 📋 Objective
+Build a complete SOC lab where:
+- ✅ pfSense acts as firewall + router
+- ✅ Kali is the attacker
+- ✅ Windows & Ubuntu are victims
+- ✅ Wazuh collects logs and shows alerts in dashboard
+
+All traffic flows through pfSense and all logs are monitored by Wazuh.
+
+---
+
+## 🖥️ Virtual Machines
+
+| VM | Purpose |
+|---|---|
+| **pfSense** | Firewall, Router, DHCP, NAT |
+| **Ubuntu (Wazuh Server)** | SIEM server |
+| **Lubuntu (Agent)** | Linux monitored host |
+| **Windows 10** | Windows monitored host |
+| **Kali Linux** | Attacker |
+
+---
+
+## 🌐 Network Architecture
+
+### VirtualBox Network Design
+
+| VM | Adapter Configuration |
+|---|---|
+| **pfSense** | Adapter 1 → NAT<br>Adapter 2 → Host-Only |
+| **All Others** | Adapter 1 → Host-Only |
+
+---
+
+## ⚙️ VirtualBox Host-Only Network Setup
+
+1. Open: **VirtualBox → File → Tools → Host Network Manager**
+2. Create a Host-Only network
+3. Configure:
+   - **IPv4:** `192.168.56.1`
+   - **Mask:** `255.255.255.0`
+   - **DHCP:** Disabled
+
+> pfSense will provide DHCP instead
+
+---
+
+## 🔧 pfSense Configuration
+
+### Interfaces
+- **WAN** → NAT
+- **LAN** → Host-Only
+
+### Enable DHCP
+**pfSense Web UI:** Services → DHCP Server → LAN
+
+Enable DHCP with:
+- **Range:** `192.168.56.50 – 192.168.56.150`
+- **Gateway:** `192.168.56.1`
+- **DNS:** `8.8.8.8`
+
+### NAT
+**Firewall → NAT → Outbound → Automatic**
+
+---
+
+## 🐧 Ubuntu Wazuh Server IP Configuration
+
+**Set static IP:** `192.168.56.10`
+
+**Netplan configuration:**
+
+```yaml
+network:
+  version: 2
+  renderer: NetworkManager
+  ethernets:
+    enp0s3:
+      dhcp4: no
+      addresses:
+        - 192.168.56.10/24
+      routes:
+        - to: default
+          via: 192.168.56.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+```
+
+---
+
+## 📦 Wazuh Installation
+
+**On Wazuh Server, install:**
+- ✅ Wazuh Manager
+- ✅ Wazuh Indexer
+- ✅ Wazuh Dashboard
+
+---
+
+## 🔐 Agent Registration
+
+### On Wazuh Server
+```bash
+sudo /var/ossec/bin/manage_agents
+```
+
+**Add agents:**
+- windows
+- ubuntu
+
+**Extract keys**
+
+### On Ubuntu Agent
+```bash
+sudo /var/ossec/bin/manage_agents
+```
+- Select **I** → paste key → **Q**
+```bash
+sudo systemctl restart wazuh-agent
+```
+
+### On Windows Agent
+**Run as Admin:**
+```cmd
+manage_agents.exe
+```
+- Select **I** → paste key → **Q**
+- Restart **Wazuh Agent** service
+
+---
+
+## ✅ Verify Agents
+
+**On Wazuh Server:**
+```bash
+/var/ossec/bin/agent_control -lc
+```
+
+**Expected output:**
+- ✅ windows → Active
+- ✅ ubuntu → Active
+
+---
+
+## 🧪 Log Flow Test
+
+### Linux Test
+```bash
+su root
+# Enter wrong password
+```
+
+**Dashboard:**
+- Wazuh → Security Events → Authentication failure
+
+### Windows Test
+- Attempt wrong login → Event ID 4625
+
+---
+
+## 🔥 pfSense Logs
+
+**pfSense sends syslog to Wazuh**
+
+Logs appear in Wazuh Dashboard
+
+---
+
+## 🏗️ Final SOC Architecture
+
+```
+Kali → attacks
+Windows & Ubuntu → victims
+pfSense → firewall + router
+Wazuh → SIEM
+Dashboard → visualization
+```
+
+---
+
+## 📊 Architecture Flow
+
+```
+[Internet]
+    ↓
+[pfSense WAN]
+    ↓
+[pfSense LAN] ← 192.168.56.1
+    ↓
+    ├── [Wazuh Server] - 192.168.56.10
+    ├── [Windows 10] - DHCP
+    ├── [Lubuntu] - DHCP
+    └── [Kali Linux] - DHCP
+```
+
+---
+
+**🎯 Lab Complete!**
