@@ -271,7 +271,7 @@ systemctl enable --now wazuh-agent
 ##  Screenshots
 
 ### Wazuh Dashboard Overview
-![Dashboard](link-to-screenshot)<img width="1852" height="956" alt="dashboard wazuh - Copy" src="https://github.com/user-attachments/assets/f6de356b-84bc-4f7e-8150-9e6914cbbd4f" />
+![Dashboard](link-to-screenshot)<img width="1852" height="956" alt="dashboard wazuh - Copy" src="docs/images/WAZUH-DASHBOARD.png" />
 
 
 ### File Integrity Monitoring Events
