@@ -17,7 +17,6 @@ A comprehensive security monitoring environment built to demonstrate enterprise-
 - [Key Features](#key-features)
 - [Lab Environment](#lab-environment)
 - [Installation & Setup](#installation--setup)
-- [Implemented Capabilities](#implemented-capabilities)
 - [Use Cases & Demonstrations](#use-cases--demonstrations)
 - [Screenshots](#screenshots)
 - [Skills Demonstrated](#skills-demonstrated)
@@ -269,26 +268,29 @@ systemctl enable --now wazuh-agent
 ##  Screenshots
 
 ### Wazuh Dashboard Overview
-![Dashboard](link-to-screenshot) 
 
 <img width="1852" height="956" alt="dashboard wazuh - Copy" src="docs/images/WAZUH-DASHBOARD.png" />
 
 
 ### File Integrity Monitoring Events
-![FIM Events](link-to-screenshot)
 
 <img width="1918" height="1021" alt="FIM added" src="docs/images/FIM added.png" />
 
 ### Agent Inventory
 
-![Agent Inventory](link-to-screenshot)
-
 <img width="1919" height="1014" alt="wazuh agent to inventory" src="docs/images/wazuh agent to inventory.png" />
 
 ### Security Alerts
-![Alerts](link-to-screenshot)
 
-<img width="1915" height="1017" alt="wazuh event dashboard" src="docs/images/wazuh event dashboard.png" />
+<img width="1915" height="1017" alt="Security alerts" src="docs/images/wazuh event dashboard.png" />
+
+### Pfsense Security Logs
+
+<img width="1915" height="1017" alt="Pfsense security logs" src="docs/images/pfsense log.png" />
+
+### Archive Logs
+
+<img width="1915" height="1017" alt="archive logs" src="docs/images/pfsense log inarchive.log.png" />
 
 ##  Skills Demonstrated
 
