@@ -4,7 +4,7 @@ The lab is designed to simulate real-world blue team operations, including log c
 The primary goal of this lab is to gain practical SOC experience in log analysis, detection engineering, troubleshooting, and SIEM operations.
 
 # 🛡️ Cybersecurity Home Lab – Wazuh Integration
-<img width="1852" height="956" alt="dashboard wazuh - Copy" src="https://github.com/user-attachments/assets/ad4189d6-abe8-4b30-b940-3695e7f0b13c" />
+<img width="1852" height="956" alt="dashboard wazuh - Copy" src="docs/images/WAZUH-DASHBOARD.png" />
 
 A comprehensive security monitoring environment built to demonstrate enterprise-grade SIEM capabilities, threat detection, and incident response using Wazuh open-source security platform.
 
