@@ -285,7 +285,7 @@ systemctl enable --now wazuh-agent
 
 ![Agent Inventory](link-to-screenshot)
 
-<img width="1919" height="1014" alt="wazuh agent to inventory" src="https://github.com/user-attachments/assets/43863220-d2fb-4b23-89c5-dabe527c38d9" />
+<img width="1919" height="1014" alt="wazuh agent to inventory" src="docs/images/wazuh agent to inventory.png" />
 
 ### Security Alerts
 ![Alerts](link-to-screenshot)
