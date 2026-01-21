@@ -290,7 +290,7 @@ systemctl enable --now wazuh-agent
 ### Security Alerts
 ![Alerts](link-to-screenshot)
 
-<img width="1915" height="1017" alt="wazuh event dashboard" src="https://github.com/user-attachments/assets/b19285a0-ee42-4553-b25d-c1c23984bb73" />
+<img width="1915" height="1017" alt="wazuh event dashboard" src="docs/images/wazuh event dashboard.png" />
 
 ##  Skills Demonstrated
 
