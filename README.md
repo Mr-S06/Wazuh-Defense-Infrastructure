@@ -8,9 +8,7 @@ The primary goal of this lab is to gain practical SOC experience in log analysis
 
 A comprehensive security monitoring environment built to demonstrate enterprise-grade SIEM capabilities, threat detection, and incident response using Wazuh open-source security platform.
 
-![Wazuh](https://img.shields.io/badge/Wazuh-4.12-blue)
-![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-lightgrey)
-![License](https://img.shields.io/badge/License-MIT-green)
+
 
 ## 📋 Table of Contents
 
