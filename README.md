@@ -279,7 +279,7 @@ systemctl enable --now wazuh-agent
 ### File Integrity Monitoring Events
 ![FIM Events](link-to-screenshot)
 
-<img width="1918" height="1021" alt="FIM added" src="https://github.com/user-attachments/assets/e601a7c4-430f-42b5-8355-49c74c1f7897" />
+<img width="1918" height="1021" alt="FIM added" src="docs/images/FIM added.png" />
 
 ### Agent Inventory
 
