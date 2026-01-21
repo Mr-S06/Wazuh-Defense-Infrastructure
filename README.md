@@ -322,7 +322,7 @@ systemctl enable --now wazuh-agent
 
 Detailed documentation for this project is available in the following resources:
 
-1. **[Wazuh Installation Guide](./docs/Wazuh-Log-Detection.pdf)** - Complete installation procedures, architecture overview, and dashboard setup
+1. **[Wazuh Installation Guide](./docs/WAZUH-LOG-DETECTION.md)** - Complete installation procedures, architecture overview, and dashboard setup
 2. **[File Integrity Monitoring Configuration](./docs/WAZUH-FIM.md)** - FIM setup, testing, and validation procedures
 3. **[pfSense Integration Guide](./docs/pfSense-Integration.pdf)** - Firewall deployment and log forwarding configuration
 
