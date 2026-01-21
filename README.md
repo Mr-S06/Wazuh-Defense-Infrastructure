@@ -271,18 +271,26 @@ systemctl enable --now wazuh-agent
 ##  Screenshots
 
 ### Wazuh Dashboard Overview
-![Dashboard](link-to-screenshot)<img width="1852" height="956" alt="dashboard wazuh - Copy" src="docs/images/WAZUH-DASHBOARD.png" />
+![Dashboard](link-to-screenshot) 
+
+<img width="1852" height="956" alt="dashboard wazuh - Copy" src="docs/images/WAZUH-DASHBOARD.png" />
 
 
 ### File Integrity Monitoring Events
-![FIM Events](link-to-screenshot)<img width="1918" height="1021" alt="FIM added" src="https://github.com/user-attachments/assets/e601a7c4-430f-42b5-8355-49c74c1f7897" />
+![FIM Events](link-to-screenshot)
+
+<img width="1918" height="1021" alt="FIM added" src="https://github.com/user-attachments/assets/e601a7c4-430f-42b5-8355-49c74c1f7897" />
 
 ### Agent Inventory
 
-![Agent Inventory](link-to-screenshot)<img width="1919" height="1014" alt="wazuh agent to inventory" src="https://github.com/user-attachments/assets/43863220-d2fb-4b23-89c5-dabe527c38d9" />
+![Agent Inventory](link-to-screenshot)
+
+<img width="1919" height="1014" alt="wazuh agent to inventory" src="https://github.com/user-attachments/assets/43863220-d2fb-4b23-89c5-dabe527c38d9" />
 
 ### Security Alerts
-![Alerts](link-to-screenshot)<img width="1915" height="1017" alt="wazuh event dashboard" src="https://github.com/user-attachments/assets/b19285a0-ee42-4553-b25d-c1c23984bb73" />
+![Alerts](link-to-screenshot)
+
+<img width="1915" height="1017" alt="wazuh event dashboard" src="https://github.com/user-attachments/assets/b19285a0-ee42-4553-b25d-c1c23984bb73" />
 
 ##  Skills Demonstrated
 
