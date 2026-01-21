@@ -84,6 +84,13 @@ This hands-on implementation enhanced my understanding of how Wazuh agents monit
 
 ## VISUAL WALKTHROUGH OF FILE INTEGRATIONS
 
-![Ossec Modification](docs/images/ossec.png)
+#### OSSEC MODIFICATION
+<img src="images/ossec.png" alt="Ossec Modification" width="400" Hieght="300">
 
+#### FIM OPERTAION
 
+<img src="images/FIM added.png" alt="Ossec Modification" width="400" Hieght="300">
+
+#### FIM ANALYSIS
+
+<img src="images/fim analysis.png" alt="Ossec Modification" width="400" Hieght="300">
