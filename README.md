@@ -324,7 +324,7 @@ Detailed documentation for this project is available in the following resources:
 
 1. **[Wazuh Installation Guide](./docs/WAZUH-INSTALLATION.md)** - Complete installation procedures, architecture overview, and dashboard setup
 2. **[File Integrity Monitoring Configuration](./docs/WAZUH-FIM.md)** - FIM setup, testing, and validation procedures
-3. **[pfSense Integration Guide](./docs/pfSense-Integration.pdf)** - Firewall deployment and log forwarding configuration
+3. **[pfSense Integration Guide](./docs/WAZUH-PFSENSE-INTEGRATION.md)** - Firewall deployment and log forwarding configuration
 
 ### Additional Resources
 
