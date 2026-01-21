@@ -118,8 +118,21 @@ Use the provided **admin credentials** to log in to the Wazuh Dashboard and begi
 
 ## VISUAL WALKTHROUGH OF WAZUH
 
+<img src="images/WAZUH MANAGER.png" alt="WAZUH MANAGER" width="400" height="300">
+	
+- WAZUH MANAGER
 
+<img src="images/windows agent.png" alt="WINDOWS AGENT" width="400" height="300">
 
+- WINDOWS AGENT
+
+<img src="images/lubuntu agent status.png" alt="LINUX AGENT" width="400" height="300">
+
+- LINUX AGENT
+
+<img src="images/WAZUH-DASHBOARD.png" alt="WAZUH DASHBOARD" width="400" height="300">
+
+- WAZUH DASHBOARD
 ## CONCLUSION & NEXT STEPS
 By following this guide, you have successfully deployed the **Wazuh Server** (Manager), **Wazuh Indexer**, and **Wazuh Dashboard** on your Ubuntu environment using the automated installation script. With the setup completed, you now have a centralized platform capable of collecting, analyzing, and visualizing security events in real time.
 
