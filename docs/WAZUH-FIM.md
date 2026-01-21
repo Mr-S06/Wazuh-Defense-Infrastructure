@@ -82,4 +82,8 @@ The configuration allowed the system to:
   -Establish a baseline understanding of how FIM operates within a SOC environment.
 This hands-on implementation enhanced my understanding of how Wazuh agents monitor file systems, generate security events, and forward them to the central manager for analysis. It also provided practical insights into fine-tuning the configuration parameters such as frequency, directory selection, and recursion levels.
 
-VISUAL WALKTHROUGH OF FILE INTEGRATIONS
+## VISUAL WALKTHROUGH OF FILE INTEGRATIONS
+
+![Ossec Modification](docs/images/ossec.png)
+
+
