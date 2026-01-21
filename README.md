@@ -46,192 +46,189 @@ This project showcases a fully functional Security Operations Center (SOC) envir
 ### Network Topology
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                     Home Lab Network                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                               │
-│  ┌──────────────┐          ┌─────────────────┐             │
-│  │   pfSense    │◄────────►│ Wazuh Manager   │             │
-│  │   Firewall   │          │   (Lubuntu VM)  │             │
-│  └──────────────┘          │                 │             │
-│         │                  │ - Manager       │             │
-│         │                  │ - Indexer       │             │
-│         │                  │ - API Server    │             │
-│         │                  └─────────────────┘             │
-│         │                          ▲                        │
-│         │                          │                        │
-│    ┌────┴────────────────┬─────────┴────────┬─────────┐   │
-│    │                     │                  │         │   │
-│ ┌──▼───────┐      ┌──────▼─────┐    ┌──────▼────┐   │   │
-│ │ Windows  │      │ Linux Mint │    │  Kali     │   │   │
-│ │ 10 Agent │      │   Agent    │    │  Linux    │   │   │
-│ └──────────┘      └────────────┘    │ (Attacker)│   │   │
-│                                      └───────────┘   │   │
-│                                                      │   │
-│                   ┌─────────────────┐               │   │
-│                   │  Windows 11     │               │   │
-│                   │  Dashboard GUI  │◄──────────────┘   │
-│                   └─────────────────┘                   │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                       VirtualBox Host                             │
+│                                                                  │
+│  ┌──────────────────────── WAN (NAT) ─────────────────────────┐ │
+│  │                                                             │ │
+│  │                    [ Internet ]                             │ │
+│  │                                                             │ │
+│  └───────────────▲─────────────────────────────────────────────┘ │
+│                  │                                                 │
+│          ┌───────┴────────┐                                        │
+│          │   pfSense       │                                        │
+│          │ Firewall/Router │                                        │
+│          │ WAN: NAT        │                                        │
+│          │ LAN: Host-Only  │                                        │
+│          │ 192.168.56.X    │                                        │
+│          └───────┬────────┘                                        │
+│                  │  Syslog (UDP 514)                                │
+│                  ▼                                                  │
+│  ┌────────────────────────────────────────────────────────────┐   │
+│  │                    Wazuh Server                              │   │
+│  │                192.168.56.X                                  │   │
+│  │                                                            │   │
+│  │  ┌─────────────┐   ┌─────────────┐   ┌─────────────────┐ │   │
+│  │  │ Wazuh       │   │ Wazuh       │   │ Wazuh Dashboard │ │   │
+│  │  │ Manager     │   │ Indexer     │   │ (OpenSearch UI) │ │   │
+│  │  │ (1514/TCP)  │   │ (9200/TCP)  │   │ (5601/TCP)      │ │   │
+│  │  └─────────────┘   └─────────────┘   └─────────────────┘ │   │
+│  │                                                            │   │
+│  │  Raw logs: /var/ossec/logs/archives/archives.json           │   │
+│  │  Alerts:  /var/ossec/logs/alerts/alerts.json                │   │
+│  └───────────────┬───────────────────────┬───────────────────┘   │
+│                  │                       │                         │
+│        Agent (1514/TCP)         Agent (1514/TCP)                   │
+│                  │                       │                         │
+│        ┌─────────▼────────┐   ┌──────────▼─────────┐              │
+│        │   Windows 10     │   │   Ubuntu Linux     │              │
+│        │   Wazuh Agent    │   │   Wazuh Agent      │              │
+│        │ Auth / Proc logs │   │ Syslog / AppArmor  │              │
+│        └─────────┬────────┘   └──────────┬─────────┘              │
+│                  │                       │                         │
+│                  └───────────────┬───────┘                         │
+│                                  │                                 │
+│                         ┌────────▼────────┐                        │
+│                         │   Kali Linux     │                        │
+│                         │   Attacker       │                        │
+│                         │ Scans / Brute    │                        │
+│                         └─────────────────┘                        │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ### Core Components
 
-| Component | Platform | Role |
-|-----------|----------|------|
-| **Wazuh Manager** | ubuntu VM | Central analysis engine, rule processing, alert generation |
-| **Wazuh Indexer** | ubuntu VM | OpenSearch-based data storage and indexing |
-| **Wazuh Dashboard** | Windows 11 | Web-based visualization and management interface |
-| **Windows Agent** | Windows 10 | Monitored endpoint with agent deployment |
-| **Linux Agent** | Ubuntu | Monitored endpoint with agent deployment |
-| **Attacker Machine** | Kali Linux | Red team simulation and penetration testing |
-| **pfSense Firewall** | pfSense | Network perimeter defense and traffic monitoring |
+| Component                  | Platform                  | Role                                                                                            |
+| -------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------- |
+| **pfSense Firewall**       | pfSense (FreeBSD)         | Network gateway enforcing routing, NAT, firewall policies, and exporting traffic logs to Wazuh. |
+| **Wazuh Manager**          | Ubuntu Linux              | Receives agent data, evaluates rules, and generates security alerts.                            |
+| **Wazuh Indexer**          | Ubuntu Linux (OpenSearch) | Indexes and stores security events for search and correlation.                                  |
+| **Wazuh Dashboard**        | Ubuntu Linux (Web UI)     | Visualizes alerts, logs, and agent health for SOC analysis.                                     |
+| **Windows Endpoint Agent** | Windows 10                | Generates Windows security and authentication events.                                           |
+| **Linux Endpoint Agent**   | Ubuntu Linux              | Provides Linux system, authentication, and AppArmor logs.                                       |
+| **Kali Linux (Attacker)**  | Kali Linux                | Simulates adversary activity to validate detections.                                            |
+| **VirtualBox Host**        | Windows / Linux           | Hosts and isolates the SOC lab infrastructure.                                                  |
+
 
 ##  Key Features
 
 ### Monitoring & Detection
 
-- **File Integrity Monitoring (FIM)**: Real-time detection of unauthorized file changes
-- **Log Collection & Analysis**: Centralized log ingestion from multiple sources
-- **Network Traffic Monitoring**: pfSense firewall log integration
-- **Intrusion Detection**: Real-time alert generation for suspicious activities
-- **Endpoint Visibility**: Comprehensive agent monitoring across Windows and Linux
+- Endpoint Telemetry Collection: Continuous collection of Windows and Linux security, authentication, and system events via Wazuh agents.
+- Firewall Log Visibility: Centralized ingestion of pfSense firewall and traffic logs for network-level monitoring and correlation.
+- Authentication Abuse Detection: Detection of failed and successful logons across Windows and Linux environments.
+- Raw Log Archiving: Full-fidelity log retention using Wazuh archives for forensic review and detection tuning.
+- Cross-Source Correlation: Correlation of endpoint and firewall telemetry to identify suspicious activity patterns.
 
 ### Security Operations
 
-- **SIEM Dashboard**: Custom visualizations for security event analysis
-- **Alert Management**: Rule-based detection with configurable severity levels
-- **Incident Response**: Workflow for investigating and responding to security events
-- **Threat Simulation**: Controlled attack scenarios using Kali Linux
+- Centralized SOC Visibility: Unified dashboards for alerts, agent health, and log investigation.
+- Alert Triage & Analysis: Rule-based alerting with severity classification to support SOC workflows.
+- Incident Investigation Workflow: End-to-end visibility from attack generation to alert validation.
+- Attack Simulation & Validation: Controlled adversary activity using Kali Linux to validate detections and logging coverage.
+- Operational Resilience Testing: Validation of SOC visibility during network failures, firewall misconfigurations, and recovery scenarios.
 
-##  Lab Environment
+## Lab Environment
 
-### Hardware Requirements
+### Virtualization Platform
 
-- **Host Machine**: Minimum 16GB RAM, 100GB free storage
-- **Virtualization**: VMware Workstation / VirtualBox / Hyper-V
-- **Network**: Isolated virtual network or VLAN for lab segmentation
+- Hypervisor: VirtualBox
+- Deployment Model: Isolated SOC home lab
+- Network Segmentation: Host-Only LAN with pfSense enforcing routing and inspection
+
+### Network Configuration
+
+| Network            | Purpose              | Details                          |
+| ------------------ | -------------------- | -------------------------------- |
+| **Host-Only LAN**  | Internal SOC network | `192.168.56.0/x`                |
+| **pfSense LAN IP** | Default gateway      | `192.168.56.x`                   |
+| **DHCP Scope**     | Endpoint addressing  | `192.168.56.x – 192.168.56.x` |
+| **WAN Interface**  | Internet simulation  | VirtualBox NAT                   |
+
+
+### Virtual Machines
+
+| VM                   | Operating System  | Purpose                                                                     |
+| -------------------- | ----------------- | --------------------------------------------------------------------------- |
+| **pfSense**          | pfSense (FreeBSD) | Firewall, router, DHCP server, and primary network logging source           |
+| **Wazuh Server**     | Ubuntu Linux      | Hosts Wazuh Manager, Indexer (OpenSearch), and Dashboard                    |
+| **Windows Endpoint** | Windows 10        | Primary monitored endpoint generating Windows security events               |
+| **Linux Endpoint**   | Ubuntu Linux      | Secondary monitored endpoint providing Linux system and authentication logs |
+| **Attacker Machine** | Kali Linux        | Simulates adversary activity for detection validation                       |
+
+### Resource Allocation
+
+| Component        | RAM    | CPU      |
+| ---------------- | ------ | -------- |
+| pfSense          | 1 GB   | 1 vCPU   |
+| Wazuh Server     | 4–6 GB | 2 vCPU   |
+| Windows Endpoint | 4 GB   | 2 vCPU   |
+| Linux Endpoint   | 2 GB   | 1 vCPU   |
+| Kali Linux       | 2–4 GB | 1–2 vCPU |
+
+
 
 ### Software Stack
 
-- **Ubuntu/Lubuntu**: Wazuh Manager host (4GB RAM, 15GB disk)
-- **Windows 10**: Primary monitored endpoint
-- **Linux Mint**: Secondary Linux endpoint
-- **Kali Linux**: Penetration testing and attack simulation
-- **pfSense**: Open-source firewall appliance
-- **Wazuh 4.12**: Latest stable version
+- Ubuntu Linux: Wazuh Server hosting Manager, Indexer (OpenSearch), and Dashboard (6GB RAM, 30GB disk)
+- Windows 10: Primary monitored endpoint generating Windows security and authentication events
+- Ubuntu Linux: Secondary Linux endpoint providing system, authentication, and AppArmor logs
+- Kali Linux: Attacker machine for simulating scans, brute-force attempts, and adversary activity
+- pfSense: Firewall and router enforcing network policies and exporting traffic logs via syslog
+- Wazuh 4.x: Central SIEM platform for log collection, detection, alerting, and analysis
 
 ##  Installation & Setup
 
 ### Phase 1: Core Wazuh Deployment
 
 ```bash
-# Switch to root user
+# Become root
 sudo -i
 
-# Install dependencies
-apt install curl default-jdk -y
+# Install prerequisites
+apt update && apt install -y curl default-jdk
 
-# Download Wazuh installation script
-curl -sO https://packages.wazuh.com/4.12/wazuh-install.sh
-
-# Run all-in-one installation
+# Download and run Wazuh all-in-one installer
+curl -sO https://packages.wazuh.com/4.x/wazuh-install.sh
 bash wazuh-install.sh -a
+
+Access the Wazuh Dashboard at:
+https://<wazuh-server-ip>
 ```
-
-Access the dashboard at: `https://<wazuh-server-ip>`
-
 ### Phase 2: Agent Deployment
 
-#### Windows Agent Installation
+Windows Agent
+- Download the Windows agent from the Wazuh Dashboard
+- Install and configure the Manager IP
+- Verify agent status in Dashboard → Agents
 
-1. Download the Windows agent installer from Wazuh Dashboard
-2. Run installer with Manager IP configuration
-3. Verify agent connection in Dashboard → Agents Inventory
-
-#### Linux Agent Installation
-
-```bash
-# Import GPG key
+```
+# Add Wazuh repository
 curl -s https://packages.wazuh.com/key/GPG-KEY-WAZUH | apt-key add -
+echo "deb https://packages.wazuh.com/4.x/apt/ stable main" \
+> /etc/apt/sources.list.d/wazuh.list
 
-# Add repository
-echo "deb https://packages.wazuh.com/4.x/apt/ stable main" | tee /etc/apt/sources.list.d/wazuh.list
-
-# Install agent
-apt-get update
-apt-get install wazuh-agent
-
-# Configure manager IP
+# Install and start agent
+apt update && apt install -y wazuh-agent
 echo "WAZUH_MANAGER='<manager-ip>'" >> /var/ossec/etc/ossec.conf
+systemctl enable --now wazuh-agent
 
-# Start agent
-systemctl start wazuh-agent
 ```
+### Phase 3: pfSense Integration
 
-### Phase 3: File Integrity Monitoring Configuration
+- Deploy pfSense with WAN (NAT) and LAN (Host-Only) interfaces
+- Configure syslog forwarding (UDP 514) to the Wazuh Server
+- Enable firewall logging on monitored interfaces
+- Confirm logs appear in the Wazuh Dashboard
 
-Edit agent configuration (`C:\Program Files (x86)\ossec-agent\ossec.conf` on Windows):
+### Phase 4: Verification
 
-```xml
-<syscheck>
-  <frequency>10</frequency>
-  <directories>C:\Users\Public</directories>
-  <scan_on_start>yes</scan_on_start>
-  <report_changes>yes</report_changes>
-</syscheck>
-```
-
-Restart agent:
-```powershell
-Restart-Service -Name wazuh
-```
-
-### Phase 4: pfSense Integration
-
-1. Install pfSense in virtual environment
-2. Configure syslog forwarding to Wazuh Manager
-3. Enable traffic logging for monitored interfaces
-4. Verify log ingestion in Wazuh Dashboard
-
-##  Implemented Capabilities
-
-### 1. File Integrity Monitoring (FIM)
-
-**Configuration**: Custom monitoring of critical directories with 10-second scan frequency for rapid detection
-
-**Validation**: Successfully detected and alerted on:
-- File creation events
-- File modification events
-- Real-time metadata capture (path, timestamp, action type)
-
-### 2. Centralized Log Collection
-
-**Sources Integrated**:
-- Windows Event Logs (Security, System, Application)
-- Linux system logs (syslog, auth.log)
-- pfSense firewall logs (traffic, block, pass rules)
-
-**Analysis Features**:
-- Event normalization and correlation
-- Rule-based alert generation
-- Custom dashboard visualizations
-
-### 3. Network Perimeter Monitoring
-
-**pfSense Capabilities**:
-- Real-time traffic analysis
-- Firewall rule enforcement visibility
-- Intrusion detection log forwarding
-- Network policy compliance monitoring
-
-### 4. Honeypot Deployment
-
-Implemented deception technology to:
-- Attract and log attacker behavior
-- Generate high-fidelity alerts
-- Study attack patterns and TTPs
+- Confirm agents are Active in the Wazuh Dashboard
+- Validate log ingestion from:
+- Windows endpoints
+- Linux endpoints
+- pfSense firewall (syslog)
 
 ##  Use Cases & Demonstrations
 
@@ -295,7 +292,6 @@ Implemented deception technology to:
 - **System Administration**: Linux/Windows server management, service configuration
 - **Network Security**: Firewall configuration, traffic analysis, network segmentation
 - **Virtualization**: Multi-VM environment management
-- **Scripting**: Configuration automation and custom rule development
 
 ### Security Operations
 
