@@ -120,6 +120,13 @@ Expected:
 ### DASHBOARD
   - Wazuh → Security Events → Authentication failure
 
+<img src="images/WINDOWS AUTHENTICATION FAILURE.png" alt="WINDOWS ATHENTICATION FAILURE" width="500">
+
+### WINDOWS
+
+- Wrong login → Event ID 4625
+
+<img src="images/WINDOWS LOGIN FAILURE.png" alt="WINDOWS LOGIN FAILURE" width="500">
 
 
 
