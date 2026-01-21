@@ -14,18 +14,56 @@ The goal is to provide a concise, actionable reference for installing Wazuh comp
 ## LAB ENVIRONMENT & ARCHITECTURE
 
 ```
-                 Internet
-                     |
-                 (NAT / WAN)
-                     |
-                 ┌─────────┐
-                 │ pfSense │
-                 │ Firewall│
-                 └─────────┘
-                       |
-        ───────── Host-Only LAN (192.168.56.0/24) ─────────
-          |            |              |             |
-      Wazuh Server   Windows Agent   Linux Agent   Kali Linux
+┌──────────────────────────────────────────────────────────────────┐
+│                       VirtualBox Host                             │
+│                                                                  │
+│  ┌──────────────────────── WAN (NAT) ─────────────────────────┐ │
+│  │                                                             │ │
+│  │                    [ Internet ]                             │ │
+│  │                                                             │ │
+│  └───────────────▲─────────────────────────────────────────────┘ │
+│                  │                                                 │
+│          ┌───────┴────────┐                                        │
+│          │   pfSense       │                                        │
+│          │ Firewall/Router │                                        │
+│          │ WAN: NAT        │                                        │
+│          │ LAN: Host-Only  │                                        │
+│          │ 192.168.56.1    │                                        │
+│          └───────┬────────┘                                        │
+│                  │  Syslog (UDP 514)                                │
+│                  ▼                                                  │
+│  ┌────────────────────────────────────────────────────────────┐   │
+│  │                    Wazuh Server                              │   │
+│  │                192.168.56.10                                  │   │
+│  │                                                            │   │
+│  │  ┌─────────────┐   ┌─────────────┐   ┌─────────────────┐ │   │
+│  │  │ Wazuh       │   │ Wazuh       │   │ Wazuh Dashboard │ │   │
+│  │  │ Manager     │   │ Indexer     │   │ (OpenSearch UI) │ │   │
+│  │  │ (1514/TCP)  │   │ (9200/TCP)  │   │ (5601/TCP)      │ │   │
+│  │  └─────────────┘   └─────────────┘   └─────────────────┘ │   │
+│  │                                                            │   │
+│  │  Raw logs: /var/ossec/logs/archives/archives.json           │   │
+│  │  Alerts:  /var/ossec/logs/alerts/alerts.json                │   │
+│  └───────────────┬───────────────────────┬───────────────────┘   │
+│                  │                       │                         │
+│        Agent (1514/TCP)         Agent (1514/TCP)                   │
+│                  │                       │                         │
+│        ┌─────────▼────────┐   ┌──────────▼─────────┐              │
+│        │   Windows 10     │   │   Ubuntu Linux     │              │
+│        │   Wazuh Agent    │   │   Wazuh Agent      │              │
+│        │ Auth / Proc logs │   │ Syslog / AppArmor  │              │
+│        └─────────┬────────┘   └──────────┬─────────┘              │
+│                  │                       │                         │
+│                  └───────────────┬───────┘                         │
+│                                  │                                 │
+│                         ┌────────▼────────┐                        │
+│                         │   Kali Linux     │                        │
+│                         │   Attacker       │                        │
+│                         │ Scans / Brute    │                        │
+│                         └─────────────────┘                        │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+
 ```
 
 ## PREREQUISITES
